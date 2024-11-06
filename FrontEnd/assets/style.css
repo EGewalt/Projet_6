@@ -190,6 +190,11 @@ footer nav ul {
 	margin: 2em;
 }
 
+.footer-nav {
+	font-size: 11px;
+	color: #3D3D3D;
+}
+
 /* Login Page Styling */
 .login {
 	display: flex;
