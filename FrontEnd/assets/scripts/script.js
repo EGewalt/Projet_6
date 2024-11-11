@@ -1,34 +1,79 @@
-
+// Variables globales
 let allData = [];
 let categories = [];
 const gallery = document.querySelector(".gallery");
 const filtersContainer = document.getElementById("filters");
 
-// Fonction récuperation API
+// Vérifier connexion utilisateur
+function checkIfLoggedIn() {
+    const token = localStorage.getItem("accessToken");
+    const loginLink = document.getElementById("login-link");
+    
+    if (token) {
+        loginLink.textContent = "logout";
+        loginLink.setAttribute("href", "#");
+        loginLink.addEventListener("click", logout);
+    } else {
+        loginLink.textContent = "login";
+        loginLink.setAttribute("href", "login.html");
+    }
+}
+
+// Déconnexion
+function logout() {
+    localStorage.removeItem("accessToken");
+    window.location.reload();
+}
+
+// Vérifier mode admin
+function checkAdminMode() {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+        displayEditMode();
+    }
+}
+
+// Mode édition
+function displayEditMode() {
+    const body = document.querySelector("body");
+    const topBar = document.createElement("div");
+    topBar.className = "topBar";
+    topBar.innerHTML = `<p><i class="fa-solid fa-pen-to-square"></i> Mode édition</p>`;
+    body.insertAdjacentElement("afterbegin", topBar);
+
+    const title = document.querySelector("#portfolio h2");
+    const editText = document.createElement("span");
+    editText.classList.add("editText");
+    editText.innerHTML = `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+
+    editText.addEventListener("click", function() {
+        // Action de modification ici
+    });
+
+    title.appendChild(editText);
+}
+
+// Récupérer données API
 async function fetchInitialData() {
     try {
         const response = await fetch('http://localhost:5678/api/works');
         allData = await response.json();
 
-        // catégories
         const uniqueCategories = [...new Set(allData.map(item => item.categoryId))];
         categories = uniqueCategories;
 
-        // galerie
         displayData(allData);
-
-        // filtres
         initFilters();
-
+        checkAdminMode();
+        checkIfLoggedIn();
     } catch (error) {
-        console.error("Une erreur est survenue lors de la récupération des données:", error);
+        console.error("Erreur de récupération des données:", error);
     }
 }
 
-// Fonction afficher galerie
+// Afficher galerie
 function displayData(data) {
     gallery.innerHTML = "";
-
     data.forEach(item => {
         const figure = document.createElement("figure");
         const img = document.createElement("img");
@@ -44,23 +89,19 @@ function displayData(data) {
     });
 }
 
-// Fonction récupérer les données filtrées
+// Filtrer projets
 function fetchData(categoryId = 'all') {
     let filteredData = allData;
-
     if (categoryId !== 'all') {
         filteredData = allData.filter(item => item.categoryId === Number(categoryId));
     }
-
     displayData(filteredData);
 }
 
-// Fonction pour initialiser les filtres
+// Initialiser filtres
 function initFilters() {
-    // Ajouter le bouton "Tous"
     const allButton = document.createElement('button');
-    allButton.classList.add('filterBtn');
-    allButton.classList.add('filterBtn--active');
+    allButton.classList.add('filterBtn', 'filterBtn--active');
     allButton.setAttribute('value', 'all');
     allButton.textContent = 'Tous';
 
@@ -71,7 +112,6 @@ function initFilters() {
 
     filtersContainer.appendChild(allButton);
 
-    // Ajouter les boutons pour chaque catégorie
     categories.forEach(categoryId => {
         const category = allData.find(item => item.categoryId === categoryId);
         if (category) {
@@ -88,13 +128,12 @@ function initFilters() {
     });
 }
 
-// Fonction mettre à jour l'état du bouton actif
+// Mettre à jour bouton actif
 function setActiveButton(activeButton) {
     const buttons = document.querySelectorAll('.filterBtn');
-    buttons.forEach(button => {
-        button.classList.remove('filterBtn--active');
-    });
+    buttons.forEach(button => button.classList.remove('filterBtn--active'));
     activeButton.classList.add('filterBtn--active');
 }
 
+// Charger données
 fetchInitialData();
