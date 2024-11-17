@@ -369,7 +369,7 @@ footer nav ul {
 
 .modal-content {
     background-color: #fff;
-    padding: 0px 100px;
+    padding: 0px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 570px;
@@ -402,14 +402,14 @@ footer nav ul {
 .gallery-items {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 10px;
     justify-content: flex-start;
     padding-bottom: 30px;
 }
 
 .gallery-item {
     position: relative;
-    width: calc((100% - 28px) / 5);
+    width: calc((100% - 40px) / 5);
     height: auto;
     display: flex;
     flex-direction: column;
@@ -417,21 +417,6 @@ footer nav ul {
 }
 
 .gallery-item img {
-    width: 76.61px;
-    height: 102.57px;
-    object-fit: cover;
-}
-
-/* Styles pour la galerie principale */
-.gallery {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-}
-
-.gallery img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -439,8 +424,8 @@ footer nav ul {
 
 .delete-icon {
     position: absolute;
-    top: 15px;
-    right: 5px;
+    top: 10px;
+    right: 10px;
     background-color: black;
     width: 17px;
     height: 17px;
