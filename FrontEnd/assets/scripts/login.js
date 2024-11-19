@@ -54,7 +54,7 @@ async function handleAuthentication() {
 
         // Gestion erreurs d'authentification
         if (error || message) {
-            displayError("Combinaison e-mail/mot de passe incorrecte.");
+            displayError("Erreur dans l’identifiant ou le mot de passe");
         } else if (token) {
             // Stockage token et redirection
             localStorage.setItem("accessToken", token);
