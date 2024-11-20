@@ -372,18 +372,18 @@ footer nav ul {
 
 .modal-content {
     background-color: #fff;
-    padding: 0px 40px;
+    padding: 0px 100px;
     border-radius: 10px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    width: 570px;
-    height: 760px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 430px;
+    height: 688px;
     position: relative;
-    animation: slideInFromRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: slideInFromRight 0.5s forwards;
     overflow: hidden;
 }
 
 .modal-title {
-    padding: 40px 0px;
+    padding: 50px 0px;
     text-align: center;
     margin-top: 0;
     color: #000000;
@@ -394,29 +394,24 @@ footer nav ul {
 
 .close-btn {
     position: absolute;
-    top: 40px;
+    top: 50px;
     right: 50px;
     cursor: pointer;
     font-size: 24px;
     color: #000000;
-    transition: transform 0.2s ease;
-}
-
-.close-btn:hover {
-    transform: rotate(90deg);
 }
 
 .gallery-items {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    row-gap: 30px;
+    justify-content: flex-start;
     padding-bottom: 50px;
 }
 
 .gallery-item {
     position: relative;
-    width: 100%;
+    width: calc((100% - 4 * 10px) / 5);
     height: auto;
     display: flex;
     flex-direction: column;
@@ -424,15 +419,16 @@ footer nav ul {
 }
 
 .gallery-item img {
-    width: 100%;
-    height: 100%;
+    width: 77px;
+    padding: 10px 0px;
+    height: 102px;
     object-fit: cover;
 }
 
 .delete-icon {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 5px;
     background-color: black;
     width: 17px;
     height: 17px;
@@ -441,12 +437,6 @@ footer nav ul {
     border-radius: 3px;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.delete-icon:hover {
-    background-color: #333;
-    transform: scale(1.1);
 }
 
 .delete-icon i {
@@ -462,163 +452,143 @@ footer nav ul {
     border: none;
     border-radius: 60px;
     cursor: pointer;
-    margin: 38px auto 30px;
+    margin: 38px auto;
     display: block;
     font-family: "Syne";
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.add-photo-btn:not(.button-disabled):hover {
-    background-color: #0C4A3E;
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(29, 97, 84, 0.2);
+    transition: all 0.3s ease;
 }
 
 .button-disabled {
     opacity: 0.5;
-    cursor: not-allowed !important;
     background-color: #A7A7A7 !important;
-    transform: none !important;
+    cursor: not-allowed !important;
 }
 
 .separator {
     border: none;
     border-top: 1px solid #ccc;
-    margin: 15px 0;
-    opacity: 0.5;
-}
-
-.photo-category {
-    width: 100% !important;
-    height: 37px;
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-    border: none;
-    margin-top: 10px;
-    padding-left: 13px;
-    transition: box-shadow 0.2s ease;
-}
-
-.photo-category:focus {
-    box-shadow: 0px 4px 14px rgba(29, 97, 84, 0.15);
-    outline: none;
+    margin: 20px 0;
 }
 
 .photo-div {
-    height: 180px;
+    height: 169px;
+    width: 420px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #e8f1f6;
-    overflow: hidden;
-    margin-bottom: 15px;
-    border-radius: 3px;
-    transition: background-color 0.2s ease;
-}
-
-.photo-div:hover {
-    background-color: #dde8ef;
-}
-
-.photo-div i {
-    font-size: 4.5em;
-    color: #B9C5CC;
-    transition: transform 0.3s ease;
-}
-
-.photo-div:hover i {
-    transform: scale(1.1);
-}
-
-.image {
-    padding: 13px 30px;
-    background-color: #cbd6dc;
-    border-radius: 25px;
-    color: #376b89;
-    margin-top: 17px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.image:hover {
-    background-color: #b1bdc3;
-    transform: translateY(-1px);
+    background-color: #E8F1F6;
+    margin: 36px auto;
+    position: relative;
 }
 
 .photo-div img {
-    width: 100%;
-    height: 100%;
+    width: 129px;
+    height: 169px;
     object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.photo-div i {
+    font-size: 58px;
+    color: #B9C5CC;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.photo-div.has-image i,
+.photo-div.has-image .image,
+.photo-div.has-image p {
+    visibility: hidden;
+}
+
+.image {
+    padding: 10px 33px;
+    background-color: #CBD6DC;
+    border-radius: 50px;
+    color: #306685;
+    font-family: 'Work Sans';
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
 }
 
 .photo-div p {
+    font-family: 'Work Sans';
     font-size: 10px;
-    color: #575859;
+    color: #444444;
     margin-top: 7px;
+    position: relative;
+    z-index: 1;
 }
 
-.modal-photo-label {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    align-items: start;
+.form-group {
+    width: 420px;
+    margin: 0 auto 21px auto;
 }
 
-.modal-photo-div label {
+.form-group label {
+    color: #3D3D3D;
+    font-family: 'Work Sans';
     font-size: 14px;
-    color: #000000;
-    font-weight: 500;
-    font-family: "Work Sans";
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 51px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    border: none;
+    padding: 0 16px;
 }
 
 .modal-return {
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 20px;
-    width: 30px;
-    height: 30px;
+    width: 21px;
+    height: 21px;
     cursor: pointer;
     background: none;
     border: none;
     padding: 0;
-    transition: all 0.3s ease;
-}
-
-.modal-return:hover {
-    transform: translateX(-3px) scale(1.1);
 }
 
 .modal-return i {
-    font-size: 1.3em;
-    display: block;
+    font-size: 21px;
+    color: #000000;
 }
 
 @keyframes slideInFromRight {
-    0% {
-        opacity: 0;
-        transform: translateX(30px);
+    from {
+        transform: translateX(150%);
     }
-    100% {
-        opacity: 1;
+    to {
         transform: translateX(0);
     }
 }
 
 @keyframes slideOutToRight {
-    0% {
-        opacity: 1;
+    from {
         transform: translateX(0);
     }
-    100% {
-        opacity: 0;
-        transform: translateX(30px);
+    to {
+        transform: translateX(150%);
     }
 }
 
 .hide-content {
-    animation: slideOutToRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: slideOutToRight 0.5s forwards;
 }

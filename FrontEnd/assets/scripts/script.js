@@ -123,7 +123,6 @@ function openEditModal() {
             await deleteImage(imageId);
             galleryItem.remove();
             
-            // MaJ galerie principale
             const updatedResponse = await fetch('http://localhost:5678/api/works');
             allData = await updatedResponse.json();
             displayData(allData);
@@ -158,11 +157,13 @@ function openAddPhotoModal() {
                     <input type="file" name="imgPreview" id="photo-input" accept="image/png, image/jpeg" style="display: none;">
                     <p>jpg, png : 4mo max</p>
                 </div>
-                <div class="modal-photo-label">
+                <div class="form-group">
                     <label for="title">Titre</label>
-                    <input type="text" name="title" id="title" class="photo-category" required>
+                    <input type="text" name="title" id="title" required>
+                </div>
+                <div class="form-group">
                     <label for="category">Catégorie</label>
-                    <select name="category" id="category" class="photo-category" required>
+                    <select name="category" id="category" required>
                         <option value="">Sélectionner une catégorie</option>
                     </select>
                 </div>
@@ -278,15 +279,12 @@ async function uploadPhoto(title, category, file) {
             throw new Error('Erreur lors de l\'upload');
         }
         
-        // Récupérer les données mises à jour depuis l'API
         const worksResponse = await fetch('http://localhost:5678/api/works');
         allData = await worksResponse.json();
         
-        // Mettre à jour les catégories
         const uniqueCategories = [...new Set(allData.map(item => item.categoryId))];
         categories = uniqueCategories.map(id => allData.find(item => item.categoryId === id).category);
         
-        // Mettre à jour l'affichage
         displayData(allData);
     } catch (error) {
         console.error("Erreur lors de l'ajout de la photo:", error);
@@ -391,5 +389,5 @@ function setActiveButton(activeButton) {
     activeButton.classList.add('filterBtn--active');
 }
 
-// Charger les données
+// Initialisation
 fetchInitialData();
