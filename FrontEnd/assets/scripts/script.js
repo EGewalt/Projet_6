@@ -109,7 +109,10 @@ function openEditModal() {
     closeButton.addEventListener("click", () => closeEditModal(modal));
 
     const addPhotoButton = modal.querySelector(".add-photo-btn");
-    addPhotoButton.addEventListener("click", openAddPhotoModal);
+    addPhotoButton.addEventListener("click", () => {
+        closeEditModal(modal);
+        setTimeout(() => openAddPhotoModal(), 500);
+    });
 
     const deleteIcons = modal.querySelectorAll(".delete-icon");
     deleteIcons.forEach(icon => {
@@ -176,7 +179,7 @@ function openAddPhotoModal() {
     const returnButton = modal.querySelector(".modal-return");
     returnButton.addEventListener("click", () => {
         closeAddPhotoModal(modal);
-        openEditModal();
+        setTimeout(() => openEditModal(), 500);
     });
 
     const form = modal.querySelector('form');
@@ -186,10 +189,8 @@ function openAddPhotoModal() {
     const titleInput = form.querySelector("#title");
     const categorySelect = form.querySelector("#category");
 
-    // Vérifier la validité initiale
     checkFormValidity(modal);
 
-    // Ajouter les écouteurs d'événements pour la validation
     titleInput.addEventListener("input", () => checkFormValidity(modal));
     categorySelect.addEventListener("change", () => checkFormValidity(modal));
 
@@ -209,12 +210,10 @@ function openAddPhotoModal() {
             
             const reader = new FileReader();
             reader.onload = function(e) {
-                
                 const currentInput = imagePreview.querySelector('#photo-input');
                 imagePreview.innerHTML = `
                     <img src="${e.target.result}" alt="Preview">
                 `;
-                
                 imagePreview.appendChild(currentInput);
                 checkFormValidity(modal);
             };
@@ -222,7 +221,6 @@ function openAddPhotoModal() {
         }
         checkFormValidity(modal);
     });
-
 
     populateCategoryDropdown(categorySelect);
 
@@ -235,7 +233,6 @@ function openAddPhotoModal() {
         if (title && category && file) {
             await uploadPhoto(title, category, file);
             closeAddPhotoModal(modal);
-            openEditModal();
         }
     });
 
@@ -281,8 +278,15 @@ async function uploadPhoto(title, category, file) {
             throw new Error('Erreur lors de l\'upload');
         }
         
-        const newImageData = await response.json();
-        allData.push(newImageData);
+        // Récupérer les données mises à jour depuis l'API
+        const worksResponse = await fetch('http://localhost:5678/api/works');
+        allData = await worksResponse.json();
+        
+        // Mettre à jour les catégories
+        const uniqueCategories = [...new Set(allData.map(item => item.categoryId))];
+        categories = uniqueCategories.map(id => allData.find(item => item.categoryId === id).category);
+        
+        // Mettre à jour l'affichage
         displayData(allData);
     } catch (error) {
         console.error("Erreur lors de l'ajout de la photo:", error);

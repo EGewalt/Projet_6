@@ -367,22 +367,23 @@ footer nav ul {
     justify-content: center;
     align-items: center;
     display: flex;
+    backdrop-filter: blur(3px);
 }
 
 .modal-content {
     background-color: #fff;
     padding: 0px 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     width: 570px;
-    height: 688px;
-    overflow: auto;
+    height: 760px;
     position: relative;
-    animation: slideInFromRight 0.5s forwards;
+    animation: slideInFromRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    overflow: hidden;
 }
 
 .modal-title {
-    padding: 50px 0px;
+    padding: 40px 0px;
     text-align: center;
     margin-top: 0;
     color: #000000;
@@ -393,25 +394,29 @@ footer nav ul {
 
 .close-btn {
     position: absolute;
-    top: 50px;
+    top: 40px;
     right: 50px;
     cursor: pointer;
     font-size: 24px;
     color: #000000;
+    transition: transform 0.2s ease;
 }
 
-/* Styles spécifiques pour la galerie dans la modale */
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
 .gallery-items {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
-    justify-content: flex-start;
-    padding-bottom: 30px;
+    row-gap: 30px;
+    padding-bottom: 50px;
 }
 
 .gallery-item {
     position: relative;
-    width: calc((100% - 40px) / 5);
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -436,11 +441,12 @@ footer nav ul {
     border-radius: 3px;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .delete-icon:hover {
     background-color: #333;
+    transform: scale(1.1);
 }
 
 .delete-icon i {
@@ -449,27 +455,27 @@ footer nav ul {
 }
 
 .add-photo-btn {
-    width: 100%;
+    width: 237px;
     height: 36px;
     background-color: #1D6154;
     color: white;
     border: none;
     border-radius: 60px;
     cursor: pointer;
-    margin-top: 20px;
-    margin-bottom: 35px;
+    margin: 38px auto 30px;
+    display: block;
     font-family: "Syne";
-    font-style: normal;
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .add-photo-btn:not(.button-disabled):hover {
     background-color: #0C4A3E;
     transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(29, 97, 84, 0.2);
 }
 
 .button-disabled {
@@ -482,17 +488,23 @@ footer nav ul {
 .separator {
     border: none;
     border-top: 1px solid #ccc;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 15px 0;
+    opacity: 0.5;
 }
 
 .photo-category {
     width: 100% !important;
     height: 37px;
-    box-shadow: 0px 0px 15px rgb(233, 233, 228);
-    border-width: 0px;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    border: none;
     margin-top: 10px;
     padding-left: 13px;
+    transition: box-shadow 0.2s ease;
+}
+
+.photo-category:focus {
+    box-shadow: 0px 4px 14px rgba(29, 97, 84, 0.15);
+    outline: none;
 }
 
 .photo-div {
@@ -503,26 +515,38 @@ footer nav ul {
     align-items: center;
     background-color: #e8f1f6;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.photo-div:hover {
+    background-color: #dde8ef;
 }
 
 .photo-div i {
     font-size: 4.5em;
     color: #B9C5CC;
+    transition: transform 0.3s ease;
+}
+
+.photo-div:hover i {
+    transform: scale(1.1);
 }
 
 .image {
-    padding: 13px 30px 13px 30px;
+    padding: 13px 30px;
     background-color: #cbd6dc;
     border-radius: 25px;
     color: #376b89;
     margin-top: 17px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .image:hover {
     background-color: #b1bdc3;
+    transform: translateY(-1px);
 }
 
 .photo-div img {
@@ -540,7 +564,7 @@ footer nav ul {
 .modal-photo-label {
     display: flex;
     flex-direction: column;
-    margin-top: 25px;
+    margin-top: 20px;
     align-items: start;
 }
 
@@ -553,7 +577,7 @@ footer nav ul {
 
 .modal-return {
     position: absolute;
-    top: 50px;
+    top: 40px;
     left: 20px;
     width: 30px;
     height: 30px;
@@ -561,11 +585,11 @@ footer nav ul {
     background: none;
     border: none;
     padding: 0;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .modal-return:hover {
-    transform: scale(1.1);
+    transform: translateX(-3px) scale(1.1);
 }
 
 .modal-return i {
@@ -574,23 +598,27 @@ footer nav ul {
 }
 
 @keyframes slideInFromRight {
-    from {
-        transform: translateX(150%);
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
     }
-    to {
+    100% {
+        opacity: 1;
         transform: translateX(0);
     }
 }
 
 @keyframes slideOutToRight {
-    from {
+    0% {
+        opacity: 1;
         transform: translateX(0);
     }
-    to {
-        transform: translateX(150%);
+    100% {
+        opacity: 0;
+        transform: translateX(30px);
     }
 }
 
 .hide-content {
-    animation: slideOutToRight 0.5s forwards;
+    animation: slideOutToRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
