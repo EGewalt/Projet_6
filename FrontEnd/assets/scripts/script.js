@@ -164,7 +164,7 @@ function openAddPhotoModal() {
                 <div class="form-group">
                     <label for="category">Catégorie</label>
                     <select name="category" id="category" required>
-                        <option value="">Sélectionner une catégorie</option>
+                        <option value=""></option>
                     </select>
                 </div>
                 <hr class="separator">

@@ -356,7 +356,7 @@ footer nav ul {
 
 /* // MODALE */
 .edit-modal {
-    display: none;
+    display: flex;
     position: fixed;
     left: 0;
     top: 0;
@@ -366,8 +366,9 @@ footer nav ul {
     z-index: 1000;
     justify-content: center;
     align-items: center;
-    display: flex;
     backdrop-filter: blur(3px);
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 .modal-content {
@@ -378,7 +379,7 @@ footer nav ul {
     width: 430px;
     height: 688px;
     position: relative;
-    animation: slideInFromRight 0.5s forwards;
+    animation: slideInFromRight 0.3s ease-out;
     overflow: hidden;
 }
 
@@ -434,14 +435,22 @@ footer nav ul {
     height: 17px;
     display: flex;
     justify-content: center;
-    border-radius: 3px;
     align-items: center;
+    border-radius: 3px;
     cursor: pointer;
+    border: none;
+    padding: 0;
 }
 
 .delete-icon i {
-    font-size: 11px;
+    font-size: 10px;
     color: white;
+    line-height: 1;
+    height: 9px;
+    width: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-photo-btn {
@@ -470,7 +479,7 @@ footer nav ul {
 
 .separator {
     border: none;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #B3B3B3;
     margin: 20px 0;
 }
 
@@ -571,24 +580,37 @@ footer nav ul {
     color: #000000;
 }
 
-@keyframes slideInFromRight {
+@keyframes fadeIn {
     from {
-        transform: translateX(150%);
+        opacity: 0;
     }
     to {
-        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 @keyframes slideOutToRight {
     from {
-        transform: translateX(0);
+        opacity: 1;
+        transform: translateY(0);
     }
     to {
-        transform: translateX(150%);
+        opacity: 0;
+        transform: translateY(20px);
     }
 }
 
 .hide-content {
-    animation: slideOutToRight 0.5s forwards;
+    animation: slideOutToRight 0.3s ease-in forwards;
 }
