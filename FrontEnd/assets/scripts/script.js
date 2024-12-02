@@ -313,16 +313,11 @@ async function deleteImage(imageId) {
 // Récupérer les données de l'API
 async function fetchInitialData() {
     try {
-        // Récupérer les works
-        const worksResponse = await fetch('http://localhost:5678/api/works');
-        allData = await worksResponse.json();
+        const response = await fetch('http://localhost:5678/api/works');
+        allData = await response.json();
 
-        // Récupérer les catégories
-        const categoriesResponse = await fetch('http://localhost:5678/api/categories');
-        const categoriesData = await categoriesResponse.json();
-        
-        // Ajouter la catégorie "Tous"
-        categories = [{ id: 'all', name: 'Tous' }, ...categoriesData];
+        const uniqueCategories = [...new Set(allData.map(item => item.categoryId))];
+        categories = uniqueCategories.map(id => allData.find(item => item.categoryId === id).category);
 
         displayData(allData);
         initFilters();
@@ -362,24 +357,27 @@ function fetchData(categoryId = 'all') {
 
 // Initialiser les filtres
 function initFilters() {
-    filtersContainer.innerHTML = '';
-    
+    const allButton = document.createElement('button');
+    allButton.classList.add('filterBtn', 'filterBtn--active');
+    allButton.setAttribute('value', 'all');
+    allButton.textContent = 'Tous';
+
+    allButton.addEventListener('click', function() {
+        fetchData('all');
+        setActiveButton(allButton);
+    });
+
+    filtersContainer.appendChild(allButton);
+
     categories.forEach(category => {
         const button = document.createElement('button');
         button.classList.add('filterBtn');
-        
-        if (category.id === 'all') {
-            button.classList.add('filterBtn--active');
-        }
-        
         button.setAttribute('value', category.id);
         button.textContent = category.name;
-        
         button.addEventListener('click', function() {
             fetchData(category.id);
             setActiveButton(button);
         });
-        
         filtersContainer.appendChild(button);
     });
 }
